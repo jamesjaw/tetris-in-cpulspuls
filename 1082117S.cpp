@@ -1,8 +1,23 @@
 #include<iostream>
 #include<string>
+#include <fstream>
 
 using namespace std;
 int main(){
+
+    ifstream fin("1082117S_proj1.data.txt"); //讀取test case測資
+
+    if(!fin){
+        cout << "Error in read file" << endl;
+    }
+    string testcase;
+
+    getline(fin,testcase);
+
+    fin.close();
+
+    cout<<testcase;
+
 
 
     char T1[4][3] = {{' ',' ',' '}
@@ -130,7 +145,17 @@ int main(){
 
 
 
+ofstream fout("1082117S_proj1.final.txt");// 輸出結果
 
+
+    if(!fout){
+        cout << "Error in write the output" << endl;
+    }
+    fout<<"把整個遊戲的最終一行一行掃描出去用01的樣式哈哈哈";
+
+    fout.close();
+
+    return 0;
 
 
 return 0;
