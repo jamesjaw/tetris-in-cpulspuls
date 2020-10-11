@@ -2,7 +2,9 @@
 #include<string>
 #include <fstream>
 using namespace std;
-void drawgame(int h,int w,int*);//繪製遊戲
+void drawgame(int h,int w,int*);//繪製遊戲函數
+
+
 int main(){
 //讀取test case測資
     ifstream fin("1082117S_proj1.data.txt");
@@ -10,39 +12,49 @@ int main(){
     if(!fin){
         cout << "Error in read file" << endl;
     }
-    string testcase,line1,line2,line3,line4,line5,line6;
+     int row,col;
+    string blocknumber[1000];                              //有時間再改動態陣列
+    int startpostion[1000];
+    int finalmove[1000];
+    fin>>row>>col;
+    cout<<row<<" "<<col<<endl;
+    int nb = 0;
+    for(nb=0;nb<1000;nb++){
+    fin>>blocknumber[nb]>>startpostion[nb]>>finalmove[nb];
+    if(blocknumber[nb]=="End\0")                            //如果存到End則停止讀取檔案
+        nb = 1000;
+    }
+
+    for(nb=0;nb<5;nb++){
+        cout<<blocknumber[nb]<<" "<<startpostion[nb]<<" "<<finalmove[nb]<<endl;
+        if(blocknumber[nb]=="End\0")
+            cout<<"========================"<<endl;
+    }
 
 
-    getline(fin,testcase);
 
-    getline(fin,line1);
-    getline(fin,line2);
-    getline(fin,line3);
-    getline(fin,line4);
-    getline(fin,line5);
-    getline(fin,line6);
 
     fin.close();
-    cout<<line5<<endl;
+
+
 //遊戲場地初始化
 
     int mapH,mapW;
-    mapH = (int)testcase[0]-48;
-    mapW = (int)testcase[2]-48;
+    mapH = row+2;
+    mapW = col+2;
     int map[mapH][mapW];
-
-     cout<<mapH<<" "<<mapW<<endl<<endl;
-
 
     for(int i=0;i<mapH;i++){
         for(int j=0;j<mapW;j++){
                 if(j==0 || j==mapW-1)
-                    map[i][j] = 7;//7表示兩側
+                    map[i][j] = 7;//7表示兩側當碰與側邊重疊返回上一部並停止
                 else
                     map[i][j] = 0;//0表示空的
 
                 if(i== mapH-1)
-                    map[i][j] = 2;//2表示底邊
+                    map[i][j] = 2;//2表示底邊當碰到底移動n格然後停止
+                if(i==0)
+                    map[i][j] = 5;//5表示屋頂當碰到屋頂遊戲結束
 
 
         }
@@ -154,7 +166,11 @@ int main(){
                     ,{1,1,0,0}};
 
 //放置方塊
+
+
 //方塊落下
+
+
 //方塊消除
 
 
@@ -181,8 +197,8 @@ return 0;
 }
 
 void drawgame(int h,int w,int*map){
-    for(int i=1;i<h-1;i++){             //xxxxxx 只繪製o的部分，邊框讓他隱藏以達到要求
-        for(int j=1;j<w-1;j++){         //xoooox
+    for(int i=0;i<h;i++){             //xxxxxx 只繪製o的部分，邊框讓他隱藏以達到要求
+        for(int j=0;j<w;j++){         //xoooox
             cout<<map[i*(w)+j];         //xoooox
         }                               //xxxxxx
     cout<<endl;
