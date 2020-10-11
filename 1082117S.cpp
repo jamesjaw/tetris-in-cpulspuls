@@ -10,18 +10,20 @@ int main(){
     if(!fin){
         cout << "Error in read file" << endl;
     }
-    string testcase;
+    string testcase,line1,line2,line3,line4,line5,line6;
+
 
     getline(fin,testcase);
 
-    char restdata[100];
-
-    //restdata= testcase;
+    getline(fin,line1);
+    getline(fin,line2);
+    getline(fin,line3);
+    getline(fin,line4);
+    getline(fin,line5);
+    getline(fin,line6);
 
     fin.close();
-
-
-
+    cout<<line5<<endl;
 //遊戲場地初始化
 
     int mapH,mapW;
@@ -29,19 +31,7 @@ int main(){
     mapW = (int)testcase[2]-48;
     int map[mapH][mapW];
 
-     cout<<mapH<<" "<<mapW<<endl;
-
-     int x,y; //方塊起始座標
-     struct block {
-      block(int row,int col,int vaule);
-      int row;
-      int col;
-      int vaule;
-
-        };
-//    struct block t1[] = [(0,1,1),(0,1,1),(0,2,1),(1,1,1)];
-
-
+     cout<<mapH<<" "<<mapW<<endl<<endl;
 
 
     for(int i=0;i<mapH;i++){
@@ -177,7 +167,13 @@ ofstream fout("1082117S_proj1.final.txt");// 輸出結果
     if(!fout){
         cout << "Error in write the output" << endl;
     }
-    fout<<"把整個遊戲的最終一行一行掃描出去用01的樣式哈哈哈";
+        for(int i=1;i<mapH-1;i++){
+            for(int j=1;j<mapW-1;j++){
+                fout<<map[i][j]<<" ";
+        }
+    fout<<endl;
+}
+
 
     fout.close();
 
