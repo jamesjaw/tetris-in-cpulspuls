@@ -1,8 +1,8 @@
 #include<iostream>
 #include<string>
 #include <fstream>
-
 using namespace std;
+void drawgame(int h,int w,int*);//繪製遊戲
 int main(){
 //讀取test case測資
     ifstream fin("1082117S_proj1.data.txt");
@@ -22,13 +22,28 @@ int main(){
 
 
 
-//製作遊戲場地
+//遊戲場地初始化
 
     int mapH,mapW;
     mapH = (int)testcase[0]-48;
     mapW = (int)testcase[2]-48;
     int map[mapH][mapW];
+
      cout<<mapH<<" "<<mapW<<endl;
+
+     int x,y; //方塊起始座標
+     struct block {
+      block(int row,int col,int vaule);
+      int row;
+      int col;
+      int vaule;
+
+        };
+//    struct block t1[] = [(0,1,1),(0,1,1),(0,2,1),(1,1,1)];
+
+
+
+
     for(int i=0;i<mapH;i++){
         for(int j=0;j<mapW;j++){
                 if(j==0 || j==mapW-1)
@@ -39,19 +54,19 @@ int main(){
                 if(i== mapH-1)
                     map[i][j] = 2;//2表示底邊
 
-                cout<<map[i][j];
+
         }
-    cout<<endl;
+
     }
 
-
-
+    drawgame(mapH,mapW,*map);
 
 //建立方塊
     int T1[4][3] = { {0,0,0}
                     ,{0,0,0}
                     ,{1,1,1}
                     ,{0,1,0}};
+
 
     int T2[4][3] = { {0,0,0}
                     ,{0,1,0}
@@ -148,6 +163,10 @@ int main(){
                     ,{1,1,0,0}
                     ,{1,1,0,0}};
 
+//放置方塊
+//方塊落下
+//方塊消除
+
 
 
 
@@ -162,18 +181,17 @@ ofstream fout("1082117S_proj1.final.txt");// 輸出結果
 
     fout.close();
 
-
-
-
-
-
-
-
-
 return 0;
 }
 
-
+void drawgame(int h,int w,int*map){
+    for(int i=1;i<h-1;i++){             //xxxxxx 只繪製o的部分，邊框讓他隱藏以達到要求
+        for(int j=1;j<w-1;j++){         //xoooox
+            cout<<map[i*(w)+j];         //xoooox
+        }                               //xxxxxx
+    cout<<endl;
+}
+}
 
 
 
