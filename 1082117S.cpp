@@ -4,7 +4,7 @@
 using namespace std;
 void drawgame(int h,int w,int*);//繪製遊戲函數
 void block1(int block ,int w,int x,int y,int m,int*,int jt);
-bool charsh(int h,int w,int*);
+int charsh(int h,int w,int*,int flag);
 void washmap(int h,int w,int*);
 
 
@@ -19,6 +19,7 @@ int main(){
     string blocknumber[1000];                              //有時間再改動態陣列
     int startpostion[1000];
     int finalmove[1000];
+
     fin>>row>>col;
     cout<<row<<" "<<col<<endl;
     int nb = 0;
@@ -55,7 +56,7 @@ int main(){
                     map[i][j] = 0;//0表示空的
 
                 if(i== mapH-1)
-                    map[i][j] = 1;//2表示底邊當碰到底移動n格然後停止
+                    map[i][j] = 1;//1表示底邊當碰到底移動n格然後停止
                 if(i==0)
                     map[i][j] = 5;//5表示屋頂當碰到屋頂遊戲結束
 
@@ -63,19 +64,26 @@ int main(){
         }
 
     }
-    int x =1;
+    //====================================================================
+    int x =1; int flag;
     for(int i=x;i<mapH;++i){
+    flag = 0;
+    flag=charsh(mapH,mapW,*map,flag);
     washmap(mapH,mapW,*map);
 
     block1(17,mapW,i,2,0,*map,3);
-    if(map[10][2]==4){
+    if(flag==1){
     washmap(mapH,mapW,*map);
-    block1(17,mapW,i-1,2,0,*map,1);
-    i =mapH;
+    block1(17,mapW,i-2,2,0,*map,1);
+
+    i=mapH;
 
     }
      drawgame(mapH,mapW,*map);
     }
+
+
+
 
 
 
@@ -93,7 +101,7 @@ int main(){
 
 
 
-
+//==================================================================
 
 ofstream fout("1082117S_proj1.final.txt");// 輸出結果
 
@@ -115,10 +123,10 @@ return 0;
 }
 
 void drawgame(int h,int w,int*map){
-    for(int i=0;i<h;i++){             //xxxxxx 只繪製o的部分，邊框讓他隱藏以達到要求
-        for(int j=0;j<w;j++){         //xoooox
-            cout<<map[i*(w)+j];         //xoooox
-        }                               //xxxxxx
+    for(int i=0;i<h;i++){
+        for(int j=0;j<w;j++){
+            cout<<map[i*(w)+j];
+        }
     cout<<endl;
 }
 }
@@ -276,14 +284,15 @@ for(int i=0;i<h;i++)
         }
 }
 
-bool charsh(int h,int w,int*map){
-for(int i=0;i<=h;i++)
+int charsh(int h,int w,int*map,int flag){
+for(int i=0;i<h;i++){
         for(int j=0;j<w;j++){
-            if(map[i*(w)+j]==4)
-            return 1;
-            else
-            return 0;
+                if(map[i*(w)+j]==4){
+                    return 1;
+                }
+        }
 }
+return 0;
 }
 
 
