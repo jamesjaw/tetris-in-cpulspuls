@@ -3,6 +3,7 @@
 #include <fstream>
 using namespace std;
 void drawgame(int h,int w,int*);//繪製遊戲函數
+void block1(int block ,int w,int x,int y,int m,int*);
 
 
 int main(){
@@ -60,110 +61,11 @@ int main(){
         }
 
     }
-
+    block1(4,mapW,1,2,0,*map);
     drawgame(mapH,mapW,*map);
 
-//建立方塊
-    int T1[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{1,1,1}
-                    ,{0,1,0}};
 
 
-    int T2[4][3] = { {0,0,0}
-                    ,{0,1,0}
-                    ,{1,1,0}
-                    ,{0,1,0}};
-
-    int T3[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{0,1,0}
-                    ,{1,1,1}};
-
-    int T4[4][3] = { {0,0,0}
-                    ,{1,0,0}
-                    ,{1,1,0}
-                    ,{1,0,0}};
-
-
-    int L1[4][3] = { {0,0,0}
-                    ,{1,0,0}
-                    ,{1,0,0}
-                    ,{1,1,0}};
-
-    int L2[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{1,1,1}
-                    ,{1,0,0}};
-
-    int L3[4][3] = { {0,0,0}
-                    ,{1,1,0}
-                    ,{0,1,0}
-                    ,{0,1,0}};
-
-    int L4[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{0,0,1}
-                    ,{1,1,1}};
-
-
-    int J1[4][3] = { {0,0,0}
-                    ,{0,1,0}
-                    ,{0,1,0}
-                    ,{1,1,0}};
-
-    int J2[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{1,0,0}
-                    ,{1,1,1}};
-
-    int J3[4][3] = { {0,0,0}
-                    ,{1,1,0}
-                    ,{1,0,0}
-                    ,{1,0,0}};
-
-    int J4[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{1,1,1}
-                    ,{0,0,1}};
-
-
-    int S1[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{0,1,1}
-                    ,{1,1,0}};
-
-    int S2[4][3] = { {0,0,0}
-                    ,{1,0,0}
-                    ,{1,1,0}
-                    ,{0,1,0}};
-
-    int Z1[4][3] = { {0,0,0}
-                    ,{0,0,0}
-                    ,{1,1,0}
-                    ,{0,1,1}};
-
-    int Z2[4][3] = { {0,0,0}
-                    ,{0,1,0}
-                    ,{1,1,0}
-                    ,{1,0,0}};
-
-
-    int I1[4][4] = { {1,0,0,0}
-                    ,{1,0,0,0}
-                    ,{1,0,0,0}
-                    ,{1,0,0,0}};
-
-    int I2[4][4] = { {0,0,0,0}
-                    ,{0,0,0,0}
-                    ,{0,0,0,0}
-                    ,{1,1,1,1}};
-
-
-    int O[4][4] = { {0,0,0,0}
-                    ,{0,0,0,0}
-                    ,{1,1,0,0}
-                    ,{1,1,0,0}};
 
 //放置方塊
 
@@ -203,6 +105,149 @@ void drawgame(int h,int w,int*map){
         }                               //xxxxxx
     cout<<endl;
 }
+}
+
+void block1(int block,int w,int x,int y,int m,int*map){
+    switch(block)
+    {
+    case 1:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x)*w+y+2]=1;
+    map[(x+1)*w+y+1]=1;
+    break;
+
+    case 2:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y-1]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+2)*w+y]=1;
+    break;
+
+    case 3:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y-1]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+1)*w+y+1]=1;
+    break;
+
+    case 4:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+1)*w+y+1]=1;
+    map[(x+2)*w+y]=1;
+    break;
+
+    case 5:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+2)*w+y]=1;
+    map[(x+2)*w+y+1]=1;
+    break;
+
+    case 6:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x)*w+y+2]=1;
+    map[(x+1)*w+y]=1;
+    break;
+
+    case 7:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x+1)*w+y+1]=1;
+    map[(x+2)*w+y+1]=1;
+    break;
+
+    case 8:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y-2]=1;
+    map[(x+1)*w+y-1]=1;
+    map[(x+1)*w+y]=1;
+    break;
+
+    case 9:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+2)*w+y]=1;
+    map[(x+2)*w+y-1]=1;
+    break;
+
+    case 10:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+1)*w+y+1]=1;
+    map[(x+1)*w+y+2]=1;
+    break;
+
+    case 11:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+2)*w+y]=1;
+    break;
+
+    case 12:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x)*w+y+2]=1;
+    map[(x+1)*w+y+2]=1;
+    break;
+
+    case 13:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x+1)*w+y-1]=1;
+    map[(x+1)*w+y]=1;
+    break;
+
+    case 14:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+1)*w+y+1]=1;
+    map[(x+2)*w+y+1]=1;
+    break;
+
+    case 15:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x+1)*w+y+1]=1;
+    map[(x+1)*w+y+2]=1;
+    break;
+
+    case 16:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y-1]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+2)*w+y-1]=1;
+    break;
+
+    case 17:
+    map[(x)*w+y]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+2)*w+y]=1;
+    map[(x+3)*w+y]=1;
+    break;
+
+    case 18:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x)*w+y+2]=1;
+    map[(x)*w+y+3]=1;
+    break;
+
+    case 19:
+    map[(x)*w+y]=1;
+    map[(x)*w+y+1]=1;
+    map[(x+1)*w+y]=1;
+    map[(x+1)*w+y+1]=1;
+    break;
+
+    default:
+    printf("u fool");
+
+
+    }
 }
 
 
