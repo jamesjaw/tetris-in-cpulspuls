@@ -8,6 +8,7 @@ int charsh(int h,int w,int*,int flag);
 void washmap(int h,int w,int*);
 
 
+
 int main(){
 //讀取test case測資
     ifstream fin("1082117S_proj1.data.txt");
@@ -22,11 +23,12 @@ int main(){
 
     fin>>row>>col;
     cout<<row<<" "<<col<<endl;
-    int nb = 0;
-    for(nb=0;nb<1000;nb++){
-    fin>>blocknumber[nb]>>startpostion[nb]>>finalmove[nb];
-    if(blocknumber[nb]=="End\0")                            //如果存到End則停止讀取檔案
-        nb = 1000;
+    int nb = 0;                       // nb代表輸入的方塊
+    for(int i=0;i<1000;i++){
+    fin>>blocknumber[i]>>startpostion[i]>>finalmove[i];
+    nb+=1;
+    if(blocknumber[i]=="End\0")                            //如果存到End則停止讀取檔案
+        i = 1000;
     }
 
     for(nb=0;nb<5;nb++){
@@ -60,25 +62,38 @@ int main(){
                 if(i==0)
                     map[i][j] = 5;//5表示屋頂當碰到屋頂遊戲結束
 
-
         }
 
     }
     //====================================================================
-    int x =1; int flag;
+    cout<<nb<<endl;
+
+    int x =1; int flag; int move=1;
     for(int i=x;i<mapH;++i){
     flag = 0;
     flag=charsh(mapH,mapW,*map,flag);
     washmap(mapH,mapW,*map);
+    block1(13,mapW,i,2,0,*map,3);
 
-    block1(17,mapW,i,2,0,*map,3);
     if(flag==1){
     washmap(mapH,mapW,*map);
-    block1(17,mapW,i-2,2,0,*map,1);
+    for(int k=0;k<4;k++){
+    washmap(mapH,mapW,*map);
+    block1(13,mapW,i-2,2,k,*map,2);
 
-    i=mapH;
+    drawgame(mapH,mapW,*map);
 
     }
+    i=mapH;
+    }
+    flag=charsh(mapH,mapW,*map,flag);
+    if(flag==2){
+
+    washmap(mapH,mapW,*map);
+    block1(13,mapW-1,mapH-1,-1,0,*map,1);  //maph,13還原要換成代數
+    }
+
+    cout<<flag<<endl;
      drawgame(mapH,mapW,*map);
     }
 
@@ -135,136 +150,136 @@ void block1(int block,int w,int x,int y,int m,int*map,int jt){
     switch(block)
     {
     case 1:
-    map[(x)*w+y]=jt;
-    map[(x)*w+y+1]=jt;
-    map[(x)*w+y+2]=jt;
-    map[(x+1)*w+y+1]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x)*w+y+2+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
     break;
 
     case 2:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y-1]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+2)*w+y]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y-1+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+2)*w+y+m]+=jt;
     break;
 
     case 3:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y-1]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+1)*w+y+1]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y-1+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
     break;
 
     case 4:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+1)*w+y+1]=jt;
-    map[(x+2)*w+y]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
+    map[(x+2)*w+y+m]+=jt;
     break;
 
     case 5:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+2)*w+y]=jt;
-    map[(x+2)*w+y+1]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+2)*w+y+m]+=jt;
+    map[(x+2)*w+y+1+m]+=jt;
     break;
 
     case 6:
-    map[(x)*w+y]=jt;
-    map[(x)*w+y+1]=jt;
-    map[(x)*w+y+2]=jt;
-    map[(x+1)*w+y]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x)*w+y+2+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
     break;
 
     case 7:
-    map[(x)*w+y]=jt;
-    map[(x)*w+y+1]=jt;
-    map[(x+1)*w+y+1]=jt;
-    map[(x+2)*w+y+1]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
+    map[(x+2)*w+y+1+m]+=jt;
     break;
 
     case 8:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y-2]=jt;
-    map[(x+1)*w+y-1]=jt;
-    map[(x+1)*w+y]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y-2+m]+=jt;
+    map[(x+1)*w+y-1+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
     break;
 
     case 9:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+2)*w+y]=jt;
-    map[(x+2)*w+y-1]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+2)*w+y+m]+=jt;
+    map[(x+2)*w+y-1+m]+=jt;
     break;
 
     case 10:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+1)*w+y+1]=jt;
-    map[(x+1)*w+y+2]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
+    map[(x+1)*w+y+2+m]+=jt;
     break;
 
     case 11:
-    map[(x)*w+y]=jt;
-    map[(x)*w+y+1]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+2)*w+y]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+2)*w+y+m]+=jt;
     break;
 
     case 12:
-    map[(x)*w+y]=jt;
-    map[(x)*w+y+1]=jt;
-    map[(x)*w+y+2]=jt;
-    map[(x+1)*w+y+2]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x)*w+y+2+m]+=jt;
+    map[(x+1)*w+y+2+m]+=jt;
     break;
 
     case 13:
-    map[(x)*w+y]=jt;
-    map[(x)*w+y+1]=jt;
-    map[(x+1)*w+y-1]=jt;
-    map[(x+1)*w+y]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x+1)*w+y-1+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
     break;
 
     case 14:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+1)*w+y+1]=jt;
-    map[(x+2)*w+y+1]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
+    map[(x+2)*w+y+1+m]+=jt;
     break;
 
     case 15:
-    map[(x)*w+y]=jt;
-    map[(x)*w+y+1]=jt;
-    map[(x+1)*w+y+1]=jt;
-    map[(x+1)*w+y+2]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
+    map[(x+1)*w+y+2+m]+=jt;
     break;
 
     case 16:
-    map[(x)*w+y]=jt;
-    map[(x+1)*w+y-1]=jt;
-    map[(x+1)*w+y]=jt;
-    map[(x+2)*w+y-1]=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y-1+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+2)*w+y-1+m]+=jt;
     break;
 
     case 17:
-    map[(x)*w+y]+=jt;
-    map[(x+1)*w+y]+=jt;
-    map[(x+2)*w+y]+=jt;
-    map[(x+3)*w+y]+=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+2)*w+y+m]+=jt;
+    map[(x+3)*w+y+m]+=jt;
     break;
 
     case 18:
-    map[(x)*w+y]+=jt;
-    map[(x)*w+y+1]+=jt;
-    map[(x)*w+y+2]+=jt;
-    map[(x)*w+y+3]+=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x)*w+y+2+m]+=jt;
+    map[(x)*w+y+3+m]+=jt;
     break;
 
     case 19:
-    map[(x)*w+y]+=jt;
-    map[(x)*w+y+1]+=jt;
-    map[(x+1)*w+y]+=jt;
-    map[(x+1)*w+y+1]+=jt;
+    map[(x)*w+y+m]+=jt;
+    map[(x)*w+y+1+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;
+    map[(x+1)*w+y+1+m]+=jt;
     break;
 
     default:
@@ -281,15 +296,23 @@ for(int i=0;i<h;i++)
             map[i*(w)+j]=0;
             if(map[i*(w)+j]==4)
             map[i*(w)+j]=1;
+            if(map[i*(w)+j]==9)
+            map[i*(w)+j]=7;
+            if(map[i*(w)+j]==2)
+            map[i*(w)+j]=0;
         }
 }
 
 int charsh(int h,int w,int*map,int flag){
 for(int i=0;i<h;i++){
         for(int j=0;j<w;j++){
-                if(map[i*(w)+j]==4){
+                if(map[i*(w)+j]==4){      //撞到底
                     return 1;
                 }
+                if(map[i*(w)+j]==9){     //撞到牆
+                    return 2;
+                }
+
         }
 }
 return 0;
