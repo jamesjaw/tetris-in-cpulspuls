@@ -17,7 +17,8 @@ int main(){
         cout << "Error in read file" << endl;
     }
      int row,col;
-    string blocknumber[1000];                              //有時間再改動態陣列
+    string blocknumber[1000];
+    int BN[1000];
     int startpostion[1000];
     int finalmove[1000];
 
@@ -27,6 +28,45 @@ int main(){
     for(int i=0;i<1000;i++){
     fin>>blocknumber[i]>>startpostion[i]>>finalmove[i];
     nb+=1;
+    if(blocknumber[i]=="T1\0")
+        BN[i] = 1;
+    if(blocknumber[i]=="T2\0")
+        BN[i] = 2;
+    if(blocknumber[i]=="T3\0")
+        BN[i] = 3;
+    if(blocknumber[i]=="T4\0")
+        BN[i] = 4;
+    if(blocknumber[i]=="L1\0")
+        BN[i] = 5;
+    if(blocknumber[i]=="L2\0")
+        BN[i] = 6;
+    if(blocknumber[i]=="L3\0")
+        BN[i] = 7;
+    if(blocknumber[i]=="L4\0")
+        BN[i] = 8;
+    if(blocknumber[i]=="J1\0")
+        BN[i] = 9;
+    if(blocknumber[i]=="J2\0")
+        BN[i] = 10;
+    if(blocknumber[i]=="J3\0")
+        BN[i] = 11;
+    if(blocknumber[i]=="J4\0")
+        BN[i] = 12;
+    if(blocknumber[i]=="S1\0")
+        BN[i] = 13;
+    if(blocknumber[i]=="S2\0")
+        BN[i] = 14;
+    if(blocknumber[i]=="Z1\0")
+        BN[i] = 15;
+    if(blocknumber[i]=="Z2\0")
+        BN[i] = 16;
+    if(blocknumber[i]=="I1\0")
+        BN[i] = 17;
+    if(blocknumber[i]=="I2\0")
+        BN[i] = 18;
+    if(blocknumber[i]=="O\0")
+        BN[i] = 19;
+
     if(blocknumber[i]=="End\0")                            //如果存到End則停止讀取檔案
         i = 1000;
     }
@@ -53,14 +93,14 @@ int main(){
     for(int i=0;i<mapH;i++){
         for(int j=0;j<mapW;j++){
                 if(j==0 || j==mapW-1)
-                    map[i][j] = 7;//7表示兩側當碰與側邊重疊返回上一部並停止
+                    map[i][j] = 1;//7表示兩側當碰與側邊重疊返回上一部並停止
                 else
                     map[i][j] = 0;//0表示空的
 
                 if(i== mapH-1)
                     map[i][j] = 1;//1表示底邊當碰到底移動n格然後停止
                 if(i==0)
-                    map[i][j] = 5;//5表示屋頂當碰到屋頂遊戲結束
+                    map[i][j] = 9;//5表示屋頂當碰到屋頂遊戲結束
 
         }
 
@@ -68,51 +108,61 @@ int main(){
     //====================================================================
     cout<<nb<<endl;
 
-    int x =1; int flag; int move=1;
+    int x =1;                        //從row1開始放置方塊(row0是房頂)
+    int flag;                        //flag是檢測裝置4代表撞到下面6代表撞到旁邊
+    int move=1;
+    int newi;
+    int pos;
+    for(int runtime=0;runtime<nb;runtime++){            //開始放方塊進去
+    x=1;
+    pos = startpostiont[runtime];
+    move = finalmove[runtime];
+
     for(int i=x;i<mapH;++i){
     flag = 0;
-    flag=charsh(mapH,mapW,*map,flag);
-    washmap(mapH,mapW,*map);
-    block1(13,mapW,i,2,0,*map,3);
+    newi =i;                        //每下降一格都要重新檢測所以要先把flag初始化
+    flag=charsh(mapH,mapW,*map,flag);//charsh是一個掃描地圖有無出現4或6的function
+    washmap(mapH,mapW,*map);         //下一格前要先整理地圖把走過的痕跡消除方便之後的判斷
+    block1(13,mapW,newi,2,0,*map,3);    //方塊印到地圖上
 
-    if(flag==1){
+    if(flag==1){                     //發生碰撞時
     washmap(mapH,mapW,*map);
-    for(int k=0;k<4;k++){
+    block1(13,mapW,newi-2,2,0,*map,3);
+    drawgame(mapH,mapW,*map);
     washmap(mapH,mapW,*map);
-    block1(13,mapW,i-2,2,k,*map,2);
 
+    for(int k=0;k<6;k++){
+    washmap(mapH,mapW,*map);
+    block1(13,mapW,newi-2,2,k,*map,5);
+    cout<<" i="<<i<<" mapH="<<mapH<<" newi="<<newi;
     drawgame(mapH,mapW,*map);
 
+    flag=charsh(mapH,mapW,*map,flag);
+    if(flag==2){
+    washmap(mapH,mapW,*map);
+
+    block1(13,mapW,i-2,2,k-1,*map,1);     //向左還原
+    //block1(13,mapW,i-2,2,k-1,*map,1);   //向右還原
+
+    k=6;
+    }
     }
     i=mapH;
     }
-    flag=charsh(mapH,mapW,*map,flag);
-    if(flag==2){
 
-    washmap(mapH,mapW,*map);
-    block1(13,mapW-1,mapH-1,-1,0,*map,1);  //maph,13還原要換成代數
-    }
 
-    cout<<flag<<endl;
+    cout<<flag<<"i="<<i<<endl;
      drawgame(mapH,mapW,*map);
     }
 
 
+    }           //一次rumtime結束
 
 
 
 
 
 
-
-
-//放置方塊
-
-
-//方塊落下
-
-
-//方塊消除
 
 
 
@@ -144,6 +194,7 @@ void drawgame(int h,int w,int*map){
         }
     cout<<endl;
 }
+cout<<endl;
 }
 
 void block1(int block,int w,int x,int y,int m,int*map,int jt){
@@ -296,9 +347,9 @@ for(int i=0;i<h;i++)
             map[i*(w)+j]=0;
             if(map[i*(w)+j]==4)
             map[i*(w)+j]=1;
-            if(map[i*(w)+j]==9)
-            map[i*(w)+j]=7;
-            if(map[i*(w)+j]==2)
+            if(map[i*(w)+j]==6)
+            map[i*(w)+j]=1;
+            if(map[i*(w)+j]==5)
             map[i*(w)+j]=0;
         }
 }
@@ -309,7 +360,7 @@ for(int i=0;i<h;i++){
                 if(map[i*(w)+j]==4){      //撞到底
                     return 1;
                 }
-                if(map[i*(w)+j]==9){     //撞到牆
+                if(map[i*(w)+j]==6){     //撞到牆
                     return 2;
                 }
 
