@@ -107,11 +107,13 @@ int main(){
 
     }
     //====================================================================
-    cout<<nb<<endl;
+    cout<<nb<<"  "<<finalmove[0]<<endl;
+
 
     int x =1;                        //從row1開始放置方塊(row0是房頂)
     int flag;                        //flag是檢測裝置4代表撞到下面6代表撞到旁邊
     int moven=1;
+    int nmove;
     int newi;
     int pos;
     int blockdh;
@@ -129,33 +131,54 @@ int main(){
 
         if(flag==1){                                   //發生碰撞時
         washmap(mapH,mapW,*map);
-        block1(blockdh,mapW,newi-2,pos,0,*map,3);
-        drawgame(mapH,mapW,*map);
+        block1(blockdh,mapW,newi-2,pos,0,*map,0);
 
 
-        for(int k=0;k<=moven;k++){ 
+        if(moven>=0){
+        for(int k=0;k<=moven;k++){
         washmap(mapH,mapW,*map);
         block1(blockdh,mapW,newi-2,pos,k,*map,5);
         cout<<" i="<<i<<" mapH="<<mapH<<" newi="<<newi;
         drawgame(mapH,mapW,*map);
+        flag=charsh(mapH,mapW,*map,flag);
+        flag=charsh(mapH,mapW,*map,flag);
+        if(flag==2){
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,i-2,pos,k-1,*map,1);     //向左還原
+
+        drawgame(mapH,mapW,*map);
+        k=moven+1;
+        }
         if(k==moven){
          washmap1(mapH,mapW,*map);
          drawgame(mapH,mapW,*map);
         }
+    }
+    }
+
+    if(moven<0){
+        nmove = moven*-1;
+        for(int k=0;k<=nmove;k++){
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,newi-2,pos,k*-1,*map,5);
+        cout<<" i="<<i<<" mapH="<<mapH<<" newi="<<newi;
+        drawgame(mapH,mapW,*map);
+        flag=charsh(mapH,mapW,*map,flag);
         flag=charsh(mapH,mapW,*map,flag);
         if(flag==2){
         washmap(mapH,mapW,*map);
-
-        block1(blockdh,mapW,i-2,pos,k-1,*map,1);     //向左還原
-        //block1(13,mapW,i-2,pos,k-1,*map,1);   //向右還原
+        block1(blockdh,mapW,i-2,pos,(k*-1)+1,*map,1);     //向右還原
         drawgame(mapH,mapW,*map);
-        k=moven+1;
+        k=nmove+1;
         }
-
-
-
+        if(k==nmove){
+         washmap1(mapH,mapW,*map);
+         drawgame(mapH,mapW,*map);
+        }
+    }
 
     }
+
 
         i=mapH;
     }
