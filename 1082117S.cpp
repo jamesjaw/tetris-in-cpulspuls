@@ -6,6 +6,7 @@ void drawgame(int h,int w,int*);//繪製遊戲函數
 void block1(int block ,int w,int x,int y,int m,int*,int jt);
 int charsh(int h,int w,int*,int flag);
 void washmap(int h,int w,int*);
+void washmap1(int h,int w,int*);
 
 
 
@@ -110,48 +111,57 @@ int main(){
 
     int x =1;                        //從row1開始放置方塊(row0是房頂)
     int flag;                        //flag是檢測裝置4代表撞到下面6代表撞到旁邊
-    int move=1;
+    int moven=1;
     int newi;
     int pos;
+    int blockdh;
     for(int runtime=0;runtime<nb;runtime++){            //開始放方塊進去
     x=1;
-    pos = startpostiont[runtime];
-    move = finalmove[runtime];
+    pos = startpostion[runtime];
+    moven = finalmove[runtime];
+    blockdh = BN[runtime];
+        for(int i=x;i<mapH;++i){
+        flag = 0;
+        newi =i;                                       //每下降一格都要重新檢測所以要先把flag初始化
+        flag=charsh(mapH,mapW,*map,flag);              //charsh是一個掃描地圖有無出現4或6的function
+        washmap(mapH,mapW,*map);                       //下一格前要先整理地圖把走過的痕跡消除方便之後的判斷
+        block1(blockdh,mapW,newi,pos,0,*map,3);        //方塊印到地圖上
 
-    for(int i=x;i<mapH;++i){
-    flag = 0;
-    newi =i;                        //每下降一格都要重新檢測所以要先把flag初始化
-    flag=charsh(mapH,mapW,*map,flag);//charsh是一個掃描地圖有無出現4或6的function
-    washmap(mapH,mapW,*map);         //下一格前要先整理地圖把走過的痕跡消除方便之後的判斷
-    block1(13,mapW,newi,2,0,*map,3);    //方塊印到地圖上
+        if(flag==1){                                   //發生碰撞時
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,newi-2,pos,0,*map,3);
+        drawgame(mapH,mapW,*map);
 
-    if(flag==1){                     //發生碰撞時
-    washmap(mapH,mapW,*map);
-    block1(13,mapW,newi-2,2,0,*map,3);
-    drawgame(mapH,mapW,*map);
-    washmap(mapH,mapW,*map);
 
-    for(int k=0;k<6;k++){
-    washmap(mapH,mapW,*map);
-    block1(13,mapW,newi-2,2,k,*map,5);
-    cout<<" i="<<i<<" mapH="<<mapH<<" newi="<<newi;
-    drawgame(mapH,mapW,*map);
+        for(int k=0;k<=moven;k++){ 
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,newi-2,pos,k,*map,5);
+        cout<<" i="<<i<<" mapH="<<mapH<<" newi="<<newi;
+        drawgame(mapH,mapW,*map);
+        if(k==moven){
+         washmap1(mapH,mapW,*map);
+         drawgame(mapH,mapW,*map);
+        }
+        flag=charsh(mapH,mapW,*map,flag);
+        if(flag==2){
+        washmap(mapH,mapW,*map);
 
-    flag=charsh(mapH,mapW,*map,flag);
-    if(flag==2){
-    washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,i-2,pos,k-1,*map,1);     //向左還原
+        //block1(13,mapW,i-2,pos,k-1,*map,1);   //向右還原
+        drawgame(mapH,mapW,*map);
+        k=moven+1;
+        }
 
-    block1(13,mapW,i-2,2,k-1,*map,1);     //向左還原
-    //block1(13,mapW,i-2,2,k-1,*map,1);   //向右還原
 
-    k=6;
+
+
     }
-    }
-    i=mapH;
+
+        i=mapH;
     }
 
 
-    cout<<flag<<"i="<<i<<endl;
+     cout<<flag<<"i="<<i<<endl;
      drawgame(mapH,mapW,*map);
     }
 
@@ -351,6 +361,14 @@ for(int i=0;i<h;i++)
             map[i*(w)+j]=1;
             if(map[i*(w)+j]==5)
             map[i*(w)+j]=0;
+        }
+}
+void washmap1(int h,int w,int*map){
+for(int i=0;i<h;i++)
+        for(int j=0;j<w;j++){
+
+            if(map[i*(w)+j]==5)
+            map[i*(w)+j]=1;
         }
 }
 
