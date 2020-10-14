@@ -7,6 +7,7 @@ void block1(int block ,int w,int x,int y,int m,int*,int jt);
 int charsh(int h,int w,int*,int flag);
 void washmap(int h,int w,int*);
 void washmap1(int h,int w,int*);
+void line(int h,int w,int*);
 
 
 
@@ -123,6 +124,7 @@ int main(){
     moven = finalmove[runtime];
     blockdh = BN[runtime];
         for(int i=x;i<mapH;++i){
+        line(mapH,mapW,*map);
         flag = 0;
         newi =i;                                       //每下降一格都要重新檢測所以要先把flag初始化
         flag=charsh(mapH,mapW,*map,flag);              //charsh是一個掃描地圖有無出現4或6的function
@@ -408,6 +410,32 @@ for(int i=0;i<h;i++){
         }
 }
 return 0;
+}
+
+void line(int h,int w,int*map){
+    for(int i=1;i<h-1;i++){
+            int islinefull=1;
+            for(int j=1;j<w-1;j++){
+                islinefull*=map[i*w+j];
+                }
+            if(islinefull==1){
+                for(int j=1;j<w-1;j++){
+                    map[i*w+j]=0;
+                    for(;i>0;i--)
+                        for(int j=1;j<w-1;j++){
+                            if(map[i*w+j]==1){
+
+                                map[i*w+j]=0;
+                                map[(i+1)*w+j]=1;
+                            }
+
+                    }
+                    }
+                }
+
+
+
+}
 }
 
 
