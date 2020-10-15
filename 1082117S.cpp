@@ -300,17 +300,17 @@ void block1(int block,int w,int x,int y,int m,int*map,int jt){
     break;
 
     case 2:
-    map[(x)*w+y+m]+=jt;
-    map[(x+1)*w+y-1+m]+=jt;
-    map[(x+1)*w+y+m]+=jt;
-    map[(x+2)*w+y+m]+=jt;
+    map[(x)*w+y+m+1]+=jt;
+    map[(x+1)*w+y-1+m+1]+=jt;
+    map[(x+1)*w+y+m+1]+=jt;
+    map[(x+2)*w+y+m+1]+=jt;
     break;
 
     case 3:
-    map[(x)*w+y+m]+=jt;
-    map[(x+1)*w+y-1+m]+=jt;
-    map[(x+1)*w+y+m]+=jt;
-    map[(x+1)*w+y+1+m]+=jt;
+    map[(x)*w+y+m+1]+=jt;
+    map[(x+1)*w+y-1+m+1]+=jt;
+    map[(x+1)*w+y+m+1]+=jt;
+    map[(x+1)*w+y+1+m+1]+=jt;
     break;
 
     case 4:
@@ -342,17 +342,17 @@ void block1(int block,int w,int x,int y,int m,int*map,int jt){
     break;
 
     case 8:
-    map[(x)*w+y+m]+=jt;
-    map[(x+1)*w+y-2+m]+=jt;
-    map[(x+1)*w+y-1+m]+=jt;
-    map[(x+1)*w+y+m]+=jt;
+    map[(x)*w+y+m+2]+=jt;
+    map[(x+1)*w+y-2+m+2]+=jt;
+    map[(x+1)*w+y-1+m+2]+=jt;
+    map[(x+1)*w+y+m+2]+=jt;
     break;
 
     case 9:
-    map[(x)*w+y+m]+=jt;
-    map[(x+1)*w+y+m]+=jt;
-    map[(x+2)*w+y+m]+=jt;
-    map[(x+2)*w+y-1+m]+=jt;
+    map[(x)*w+y+m+1]+=jt;
+    map[(x+1)*w+y+m+1]+=jt;
+    map[(x+2)*w+y+m+1]+=jt;
+    map[(x+2)*w+y-1+m+1]+=jt;
     break;
 
     case 10:
@@ -377,10 +377,10 @@ void block1(int block,int w,int x,int y,int m,int*map,int jt){
     break;
 
     case 13:
-    map[(x)*w+y+m]+=jt;
-    map[(x)*w+y+1+m]+=jt;
-    map[(x+1)*w+y-1+m]+=jt;
-    map[(x+1)*w+y+m]+=jt;
+    map[(x)*w+y+m+1]+=jt;
+    map[(x)*w+y+1+m+1]+=jt;
+    map[(x+1)*w+y-1+m+1]+=jt;
+    map[(x+1)*w+y+m+1]+=jt;
     break;
 
     case 14:
@@ -398,10 +398,10 @@ void block1(int block,int w,int x,int y,int m,int*map,int jt){
     break;
 
     case 16:
-    map[(x)*w+y+m]+=jt;
-    map[(x+1)*w+y-1+m]+=jt;
-    map[(x+1)*w+y+m]+=jt;
-    map[(x+2)*w+y-1+m]+=jt;
+    map[(x)*w+y+m+1]+=jt;
+    map[(x+1)*w+y-1+m+1]+=jt;
+    map[(x+1)*w+y+m+1]+=jt;
+    map[(x+2)*w+y-1+m+1]+=jt;
     break;
 
     case 17:
@@ -412,10 +412,10 @@ void block1(int block,int w,int x,int y,int m,int*map,int jt){
     break;
 
     case 18:
-    map[(x)*w+y+m]+=jt;
-    map[(x)*w+y+1+m]+=jt;
-    map[(x)*w+y+2+m]+=jt;
-    map[(x)*w+y+3+m]+=jt;
+    map[(x+1)*w+y+m]+=jt;     //有bug
+    map[(x+1)*w+y+1+m]+=jt;
+    map[(x+1)*w+y+2+m]+=jt;
+    map[(x+1)*w+y+3+m]+=jt;
     break;
 
     case 19:
