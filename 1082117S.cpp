@@ -79,19 +79,13 @@ int main(){
             cout<<"========================"<<endl;
     }
 
-
-
-
     fin.close();
 
-
 //遊戲場地初始化
-
     int mapH,mapW;
     mapH = row+2;
     mapW = col+2;
     int map[mapH][mapW];
-
     for(int i=0;i<mapH;i++){
         for(int j=0;j<mapW;j++){
                 if(j==0 || j==mapW-1)
@@ -105,14 +99,13 @@ int main(){
                     map[i][j] = 9;//5表示屋頂當碰到屋頂遊戲結束
 
         }
-
     }
     //====================================================================
     cout<<nb<<"  "<<finalmove[0]<<endl;
 
 
-    int x =1;                        //從row1開始放置方塊(row0是房頂)
-    int flag;                        //flag是檢測裝置4代表撞到下面6代表撞到旁邊
+    int x =1;
+    int flag;
     int moven=1;
     int nmove;
     int newi;
@@ -146,13 +139,30 @@ int main(){
         flag=charsh(mapH,mapW,*map,flag);
         if(flag==2){
         washmap(mapH,mapW,*map);
-        block1(blockdh,mapW,i-2,pos,k-1,*map,1);     //向左還原
+        block1(blockdh,mapW,i-2,pos,k-1,*map,3);     //向左還原
+        washmap(mapH,mapW,*map);
+        flag=0;
+        for(int q=1;q<mapH;q++){
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,i-2+q,pos,k-1,*map,3);
+        flag=charsh(mapH,mapW,*map,flag);
+        drawgame(mapH,mapW,*map);
+        if(flag==1){
+            washmap(mapH,mapW,*map);
+            block1(blockdh,mapW,i-2+q-1,pos,k-1,*map,1);
+            q = mapH+1;
+        }
+        }
+
+
 
         drawgame(mapH,mapW,*map);
         k=moven+1;
         }
         if(k==moven){
-         washmap1(mapH,mapW,*map);
+         washmap(mapH,mapW,*map);
+         block1(blockdh,mapW,newi-2,pos,k,*map,1);
+
          drawgame(mapH,mapW,*map);
         }
     }
@@ -169,12 +179,26 @@ int main(){
         flag=charsh(mapH,mapW,*map,flag);
         if(flag==2){
         washmap(mapH,mapW,*map);
-        block1(blockdh,mapW,i-2,pos,(k*-1)+1,*map,1);     //向右還原
+        block1(blockdh,mapW,i-2,pos,(k*-1)+1,*map,3);     //向右還原
+        washmap(mapH,mapW,*map);
+        flag=0;
+        for(int q=1;q<mapH;q++){
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,i-2+q,pos,(k*-1)+1,*map,3);
+        flag=charsh(mapH,mapW,*map,flag);
+        drawgame(mapH,mapW,*map);
+        if(flag==1){
+            washmap(mapH,mapW,*map);
+            block1(blockdh,mapW,i-2+q-1,pos,(k*-1)+1,*map,1);
+            q = mapH+1;
+        }
+        }
         drawgame(mapH,mapW,*map);
         k=nmove+1;
         }
         if(k==nmove){
-         washmap1(mapH,mapW,*map);
+         washmap(mapH,mapW,*map);
+         block1(blockdh,mapW,newi-2,pos,k,*map,1);
          drawgame(mapH,mapW,*map);
         }
     }
