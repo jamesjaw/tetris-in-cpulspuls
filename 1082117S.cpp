@@ -111,7 +111,7 @@ int main(){
     int newi;
     int pos;
     int blockdh;
-    for(int runtime=0;runtime<nb;runtime++){            //開始放方塊進去
+    for(int runtime=0;runtime<nb+1;runtime++){            //開始放方塊進去
     x=1;
     pos = startpostion[runtime];
     moven = finalmove[runtime];
@@ -127,9 +127,11 @@ int main(){
         if(flag==1){                                   //發生碰撞時
         washmap(mapH,mapW,*map);
         block1(blockdh,mapW,newi-2,pos,0,*map,0);
-
-
-        if(moven>=0){
+        if(moven==0){
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,newi-2,pos,0,*map,1);
+        }
+        if(moven>0){
         for(int k=0;k<=moven;k++){
         washmap(mapH,mapW,*map);
         block1(blockdh,mapW,newi-2,pos,k,*map,5);
@@ -161,7 +163,21 @@ int main(){
         }
         if(k==moven){
          washmap(mapH,mapW,*map);
-         block1(blockdh,mapW,newi-2,pos,k,*map,1);
+         block1(blockdh,mapW,newi-2,pos,k,*map,3);
+
+        washmap(mapH,mapW,*map);
+        flag=0;
+        for(int q=1;q<mapH;q++){
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,i-2+q,pos,k,*map,3);
+        flag=charsh(mapH,mapW,*map,flag);
+        drawgame(mapH,mapW,*map);
+        if(flag==1){
+            washmap(mapH,mapW,*map);
+            block1(blockdh,mapW,i-2+q-1,pos,k,*map,1);
+            q = mapH+1;
+        }
+        }
 
          drawgame(mapH,mapW,*map);
         }
@@ -179,7 +195,8 @@ int main(){
         flag=charsh(mapH,mapW,*map,flag);
         if(flag==2){
         washmap(mapH,mapW,*map);
-        block1(blockdh,mapW,i-2,pos,(k*-1)+1,*map,3);     //向右還原
+        block1(blockdh,mapW,i-2,pos,(k*-1)+1,*map,3);//向右還原
+
         washmap(mapH,mapW,*map);
         flag=0;
         for(int q=1;q<mapH;q++){
@@ -198,7 +215,22 @@ int main(){
         }
         if(k==nmove){
          washmap(mapH,mapW,*map);
-         block1(blockdh,mapW,newi-2,pos,k,*map,1);
+         block1(blockdh,mapW,newi-2,pos,(k*-1),*map,3);
+
+        washmap(mapH,mapW,*map);
+        flag=0;
+        for(int q=1;q<mapH;q++){
+        washmap(mapH,mapW,*map);
+        block1(blockdh,mapW,i-2+q,pos,(k*-1),*map,3);
+        flag=charsh(mapH,mapW,*map,flag);
+        drawgame(mapH,mapW,*map);
+        if(flag==1){
+            washmap(mapH,mapW,*map);
+            block1(blockdh,mapW,i-2+q-1,pos,(k*-1),*map,1);
+            q = mapH+1;
+        }
+        }
+
          drawgame(mapH,mapW,*map);
         }
     }
@@ -211,6 +243,7 @@ int main(){
 
 
      cout<<flag<<"i="<<i<<endl;
+     line(mapH,mapW,*map);
      drawgame(mapH,mapW,*map);
     }
 
